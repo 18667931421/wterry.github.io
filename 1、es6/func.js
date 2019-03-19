@@ -82,7 +82,7 @@ console.log(obj3)
 // 深度拷贝
 let obj5 = {name:'xx',home:{
     city:'beijing'
-}}
+},hobby:['吃饭','睡觉']}
 let obj6={}
 // obj6=Object.assign(obj6,obj5);
 // console.log(obj6)
@@ -90,15 +90,20 @@ let obj6={}
 // Json.parse(JSON.stringify(obj5));
 
 function clone(origin){
-    let newObj ={};
+    let newObj = Array.isArray(origin) ? [] : {};
     for(let key in origin){
         if(typeof origin[key] === 'object'){
+            console.log(origin[key],'-----');
            newObj[key] =  clone(origin[key]);
         } else {
+            console.log(origin[key],'--2222--');
             newObj[key] = origin[key];
         }
     }
     return newObj;
 }
+obj6 = clone(obj5);
+obj6.hobby.push('ss');
 
-console.log(clone(obj5))
+console.log(obj6)
+console.log(obj5)
