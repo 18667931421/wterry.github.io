@@ -30,7 +30,7 @@ rs.on('data',function(data){
     rs.pause(); //暂停读取和发射data事件
     setTimeout(function(){
         rs.resume();//恢复读取并且触发data事件
-    },2000);
+    },2000);  
 });
 
 rs.on('error',function(){
