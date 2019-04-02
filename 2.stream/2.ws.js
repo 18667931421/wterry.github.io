@@ -16,11 +16,35 @@ let ws = fs.createWriteStream('./2.txt',{
 //如果能接着写返回true，如果不能写返回false
 //如果返回false，就不能接着写，如果真写了，数据也不会丢失
 //会缓存在内存里，等缓存区清空，再从内存读出来
-let flag = ws.write('1');
-console.log(flag);
-flag = ws.write('2')
-console.log(flag);
-flag = ws.write('3')
-console.log(flag);
-flag = ws.write('4')
-console.log(flag);
+// let flag = ws.write('1');
+// console.log(flag);
+// flag = ws.write('2')
+// console.log(flag);
+// flag = ws.write('3')
+// console.log(flag);
+// flag = ws.write('4')
+// console.log(flag);
+// let i  = 10;
+// function write(){
+//     let flag = true;
+//     while(i && flag){
+//         flag = ws.write("1");
+//         i--;
+//         console.log(flag);
+//     }
+// }
+
+// write();
+
+// ws.on('drain',()=>{
+//     console.log('drain');
+//     write();
+// });
+
+for(let i=0;i < 100 ;i++){
+    ws.write(`hello,${i}\n`);
+}
+ws.end('结束\n');
+ws.on('finish',()=>{
+    console.log('所有的写入已经完成');
+});
