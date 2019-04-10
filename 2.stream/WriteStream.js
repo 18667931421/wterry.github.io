@@ -35,6 +35,7 @@ class WriteStream extends EventEmitter{
             let len = chunk.length;
             //缓冲区的长度加上当前写入的长度
             this.length += len;
+            let ret = this.length < this.highWaterMark;
         if(this.writing) { //表示正在向底层写数据，则当前数据必须放在缓存区里
             chunk = Buffer.isBuffer(chunk) ? chunk: Buffer.from(chunk,this.encoding);
             this.buffers.push({
@@ -43,14 +44,12 @@ class WriteStream extends EventEmitter{
                 cb
             });
             //判断当前最新的缓存区大学是否小于最高水位线
-            let ret = this.length < this.highWaterMark;
-
-            return ret;
         } else { //直接调用底层的方法进行写入
             //底层写完当前数据后，要清空缓存区
             this.writing = true;
             this._write(thunk,encoding,()=>this.clearBuffer());
         }
+        return ret;
     }
 
     _write(thunk,encoding,cb){
@@ -78,8 +77,8 @@ class WriteStream extends EventEmitter{
             this._write(data.chunk,data.encoding,()=>this.clearBuffer());
         } else {
             //  缓存区清空
-            this.emit('drain');
             this.writing = false;
+            this.emit('drain');
         }
     }
 
