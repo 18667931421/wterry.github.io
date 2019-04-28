@@ -26,5 +26,6 @@ rs.on('readable',function(){
     console.log(rs._readableState.length);
     //当你读完指定的字节后，如果可读流发现剩下的字节已经比最高水位线小流，
     //则会立马再次读取填满 最高水位线
+    setTimeout()
 })
 
